@@ -1,29 +1,30 @@
 package request
 
-type GetTagRequest struct {
+type CountTagRequest struct {
+	Name  string `form:"name" binding:"max=100"`
+	State uint8  `form:"state,default=1" binding:"oneof=0 1"`
 }
 
 type TagListRequest struct {
-	Name      string `json:"name"`
-	State     uint8  `json:"state"`
-	Page      int32  `json:"page"`
-	Page_size int32  `json:"pageSize"`
+	Name     string `form:"name" binding:"max=100"`
+	State    uint8  `form:"state,default=1" binding:"oneof=0 1"`
+	Page     int32  `form:"page" `
+	PageSize int32  `form:"pageSize" `
 }
 
-// @Param name body string true "标签名称" minlength(3) maxlength(100)
-// @Param state body int false "状态" Enums(0, 1) default(1)
-// @Param created_by body string true "创建者" minlength(3) maxlength(100)
 type CreateTagRequest struct {
-	Name     string `json:"name"`
-	State    uint8  `json:"state"`
-	CreateBy string `json:"createBy"`
+	Name      string `form:"name" binding:"required,min=3,max=100"`
+	CreatedBy string `form:"created_by" binding:"required,min=3,max=100"`
+	State     uint8  `form:"state,default=1" binding:"oneof=0 1"`
 }
 
-type UpdataTagRequest struct {
-	Name       string `json:"name"`
-	State      uint8  `json:"state"`
-	ModifiedBy string `json:"modifieBy"`
+type UpdateTagRequest struct {
+	ID         uint32 `form:"id" binding:"required,gte=1"`
+	Name       string `form:"name" binding:"min=3,max=100"`
+	State      uint8  `form:"state" binding:"required,oneof=0 1"`
+	ModifiedBy string `form:"modified_by" binding:"required,min=3,max=100"`
 }
 
 type DeleteTagRequest struct {
+	ID uint32 `form:"id" binding:"required,gte=1"`
 }

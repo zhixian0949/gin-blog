@@ -1,0 +1,1 @@
+2021/07/18 18:05:26 {"callers":["E:/go/src/gin-blog/main.go: 23 main.init.0"],"level":"info","message":"app.BindAndValid errs: State必须是[0 1]中的一个","time":1626602726987353300}
