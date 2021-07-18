@@ -1,1 +1,3 @@
 2021/07/18 18:05:26 {"callers":["E:/go/src/gin-blog/main.go: 23 main.init.0"],"level":"info","message":"app.BindAndValid errs: State必须是[0 1]中的一个","time":1626602726987353300}
+2021/07/18 19:13:16 {"callers":["E:/go/src/gin-blog/main.go: 23 main.init.0"],"level":"info","message":"app.BindAndValid errs: ","time":1626606796293824500}
+2021/07/18 19:18:40 {"callers":["E:/go/src/gin-blog/main.go: 23 main.init.0"],"level":"info","message":"app.BindAndValid errs: Name长度必须至少为3个字符","time":1626607120368692100}

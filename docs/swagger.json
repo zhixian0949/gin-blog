@@ -47,7 +47,7 @@
                     "200": {
                         "description": "成功",
                         "schema": {
-                            "$ref": "#/definitions/model.TagSwagger"
+                            "$ref": "#/definitions/model.Tag"
                         }
                     },
                     "400": {
@@ -110,19 +110,12 @@
                 "summary": "更新标签",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "标签 ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
                         "description": "修改标签",
                         "name": "name",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UpdataTagRequest"
+                            "$ref": "#/definitions/request.UpdateTagRequest"
                         }
                     }
                 ],
@@ -157,11 +150,13 @@
                 "summary": "删除标签",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "标签 ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "description": "修改标签",
+                        "name": "name",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeleteTagRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -188,20 +183,6 @@
         }
     },
     "definitions": {
-        "app.Pager": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer"
-                },
-                "page_size": {
-                    "type": "integer"
-                },
-                "total_rows": {
-                    "type": "integer"
-                }
-            }
-        },
         "errcode.Error": {
             "type": "object",
             "properties": {
@@ -251,25 +232,14 @@
                 }
             }
         },
-        "model.TagSwagger": {
-            "type": "object",
-            "properties": {
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Tag"
-                    }
-                },
-                "pager": {
-                    "type": "object",
-                    "$ref": "#/definitions/app.Pager"
-                }
-            }
-        },
         "request.CreateTagRequest": {
             "type": "object",
+            "required": [
+                "createdBy",
+                "name"
+            ],
             "properties": {
-                "createBy": {
+                "createdBy": {
                     "type": "string"
                 },
                 "name": {
@@ -280,10 +250,29 @@
                 }
             }
         },
-        "request.UpdataTagRequest": {
+        "request.DeleteTagRequest": {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
-                "modifieBy": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.UpdateTagRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "modifiedBy",
+                "state"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "modifiedBy": {
                     "type": "string"
                 },
                 "name": {

@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zhixian0949/gin-blog/global"
+	"github.com/zhixian0949/gin-blog/internal/model"
 	"github.com/zhixian0949/gin-blog/internal/routers"
 	"github.com/zhixian0949/gin-blog/pkg/logger"
 	"github.com/zhixian0949/gin-blog/pkg/setting"
@@ -18,6 +19,11 @@ func init() {
 	err := setupSetting()
 	if err != nil {
 		log.Fatalf("init.setupSetting err: %v", err)
+	}
+
+	err = setupDBEngine()
+	if err != nil {
+		log.Fatalf("init.setupDBEngine err: %v", err)
 	}
 
 	err = setupLogger()
@@ -72,6 +78,16 @@ func setupLogger() error {
 		MaxAge:    10,
 		LocalTime: true,
 	}, "", log.LstdFlags).WithCaller(2)
+
+	return nil
+}
+
+func setupDBEngine() error {
+	var err error
+	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -1,13 +1,4 @@
 definitions:
-  app.Pager:
-    properties:
-      page:
-        type: integer
-      page_size:
-        type: integer
-      total_rows:
-        type: integer
-    type: object
   errcode.Error:
     properties:
       code:
@@ -40,33 +31,39 @@ definitions:
       state:
         type: integer
     type: object
-  model.TagSwagger:
-    properties:
-      list:
-        items:
-          $ref: '#/definitions/model.Tag'
-        type: array
-      pager:
-        $ref: '#/definitions/app.Pager'
-        type: object
-    type: object
   request.CreateTagRequest:
     properties:
-      createBy:
+      createdBy:
         type: string
       name:
         type: string
       state:
         type: integer
+    required:
+    - createdBy
+    - name
     type: object
-  request.UpdataTagRequest:
+  request.DeleteTagRequest:
     properties:
-      modifieBy:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  request.UpdateTagRequest:
+    properties:
+      id:
+        type: integer
+      modifiedBy:
         type: string
       name:
         type: string
       state:
         type: integer
+    required:
+    - id
+    - modifiedBy
+    - state
     type: object
 info:
   contact: {}
@@ -102,7 +99,7 @@ paths:
         "200":
           description: 成功
           schema:
-            $ref: '#/definitions/model.TagSwagger'
+            $ref: '#/definitions/model.Tag'
         "400":
           description: 请求错误
           schema:
@@ -139,11 +136,12 @@ paths:
   /api/v1/tags/{id}:
     delete:
       parameters:
-      - description: 标签 ID
-        in: path
-        name: id
+      - description: 修改标签
+        in: body
+        name: name
         required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/request.DeleteTagRequest'
       produces:
       - application/json
       responses:
@@ -162,17 +160,12 @@ paths:
       summary: 删除标签
     put:
       parameters:
-      - description: 标签 ID
-        in: path
-        name: id
-        required: true
-        type: integer
       - description: 修改标签
         in: body
         name: name
         required: true
         schema:
-          $ref: '#/definitions/request.UpdataTagRequest'
+          $ref: '#/definitions/request.UpdateTagRequest'
       produces:
       - application/json
       responses:
